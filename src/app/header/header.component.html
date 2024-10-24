@@ -1,0 +1,26 @@
+<header class="header-container">
+  <div class="logo-container">
+    <img src="/assets/dataciders.png" alt="Logo" class="logo" />
+    <h1 class="app-title">Moco UI - LAP Projekt</h1>
+  </div>
+
+  <div class="profile-container">
+    <img
+      *ngIf="playingCaptain"
+      [src]="profileImageUrl"
+      alt="Profil"
+      class="profile-image"
+      (click)="toggleApiKeyForm()"
+    />
+    <div class="api-key-form" *ngIf="isApiKeyFormVisible || !playingCaptain">
+      <input
+        type="text"
+        placeholder="API-Key eingeben"
+        [(ngModel)]="apiKey"
+        class="api-key-input"
+      />
+      <button (click)="saveApiKey()">Speichern</button>
+      <button *ngIf="playingCaptain" (click)="logout()">Abmelden</button>
+    </div>
+  </div>
+</header>

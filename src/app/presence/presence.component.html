@@ -1,0 +1,100 @@
+<h2>
+  Anwesenheit für {{ data.selectedUser?.firstname }}
+  {{ data.selectedUser?.lastname }}
+</h2>
+
+<div *ngIf="loading">Daten werden geladen...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error">
+  <div class="week-navigation">
+    <button mat-icon-button (click)="previousWeek()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Woche beginnend am {{ currentWeekStart | date: "dd.MM.yyyy" }}</span>
+    <button mat-icon-button (click)="nextWeek()">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="presences" class="mat-elevation-z8">
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Datum</th>
+      <td mat-cell *matCellDef="let presence">
+        {{ presence.date | date: "dd.MM.yyyy" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="from">
+      <th mat-header-cell *matHeaderCellDef>Von</th>
+      <td mat-cell *matCellDef="let presence">
+        <ng-container *ngIf="!presence.isEditing; else editFrom">
+          {{ presence.from }}
+        </ng-container>
+        <ng-template #editFrom>
+          <input [(ngModel)]="presence.from" type="time" />
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="to">
+      <th mat-header-cell *matHeaderCellDef>Bis</th>
+      <td mat-cell *matCellDef="let presence">
+        <ng-container *ngIf="!presence.isEditing; else editTo">
+          {{ presence.to }}
+        </ng-container>
+        <ng-template #editTo>
+          <input [(ngModel)]="presence.to" type="time" />
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isHomeOffice">
+      <th mat-header-cell *matHeaderCellDef>Home Office</th>
+      <td mat-cell *matCellDef="let presence">
+        <ng-container *ngIf="!presence.isEditing; else editHomeOffice">
+          <mat-checkbox
+            [checked]="presence.is_home_office"
+            disabled></mat-checkbox>
+        </ng-container>
+        <ng-template #editHomeOffice>
+          <mat-checkbox [(ngModel)]="presence.is_home_office"></mat-checkbox>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+      <td mat-cell *matCellDef="let presence">
+        <button
+          mat-button
+          *ngIf="!presence.isEditing"
+          (click)="editPresence(presence)">
+          Bearbeiten
+        </button>
+        <button
+          mat-button
+          *ngIf="presence.isEditing"
+          (click)="savePresence(presence)">
+          Speichern
+        </button>
+        <button
+          mat-button
+          *ngIf="presence.isEditing"
+          (click)="cancelEdit(presence)">
+          Abbrechen
+        </button>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="['date', 'from', 'to', 'isHomeOffice', 'actions']"></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: ['date', 'from', 'to', 'isHomeOffice', 'actions']
+      "></tr>
+  </table>
+</div>

@@ -1,0 +1,60 @@
+h2 {
+  text-align: center;
+  color: #3f51b5;
+  margin-bottom: 20px;
+}
+
+div.loading,
+div.error {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.week-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.week-navigation button {
+  margin: 0 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th.mat-header-cell {
+  background-color: #3f51b5;
+  color: white;
+  padding: 12px 15px;
+}
+
+td.mat-cell {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+input[type="time"] {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 5px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  th.mat-header-cell,
+  td.mat-cell {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  input[type="time"] {
+    font-size: 14px;
+  }
+}
